@@ -1,0 +1,409 @@
+---
+---
+# Previous Works in R
+#### May 7, 2020
+#### Ai-Ni, Li / NCKU STAT 111 / H24076095
+This ".Rmd" file presents some of my previous works using R language. 
+
+***
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Programming HW1
+##### NCKU STAT 111  /  H24076095
+
+
+1. Use `seq()` and `rep()` to write codes for the following questions:    
+    (a)\ Construct a vector as the same output as:
+<div align=center>1 2 3 4 5 2 3 4 5 6 3 4 5 6 7 4 5 6 7 8 5 6 7 8 9</div>
+    > Solution:
+    
+    ```{r}
+    rep(0:4, each=5) + 1:5
+    ```
+# 
+    (b)\ Construct a vector as the same output as:
+<div align=center>1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5</div>
+    > Solution:
+    
+    ```{r}
+    rep(1:5, 5)
+    ```
+# 
+    (c)\ Construct a vector as the same output as:
+<div align=center>0 0 0 0 0 1 1 1 1 1 2 2 2 2 2 3 3 3 3 3 4 4 4 4 4</div>
+    > Solution:
+    
+    ```{r}
+    rep(0:4, each=5)
+    ```
+# 
+    (d)\ Let `more.color` be defined as follows:
+    ```{r eval=FALSE}
+    more.colors <- c("red", "yellow", "blue", "green", "magenta", "cyan")
+    ```
+    Use `more.color`, `seq()`, and `rep()` to create a vector as follows:
+<div align=center>"red" "yellow" "blue" "yellow" "blue" "green"</br>
+"blue" "green" "magenta" "green" "magenta" "cyan"</div>
+    Give the name “`color.vec`” to this created vector.    
+    
+    > Solution:
+    
+    ```{r}
+    more.colors <- c("red", "yellow", "blue", "green", "magenta", "cyan")
+    loc <- rep(0:3, each=3) + 1:3
+    color.vec <- more.colors[loc]
+    color.vec
+    ```
+# 
+    (e)\ According to (d), how many colors in `color.vec`?    
+    
+    > Solution:
+    
+    ```{r}
+    length(unique(color.vec))
+    ```
+# 
+    (f)\ According to (d), how many times does each color appear in `color.vec`?    
+    
+    > Solution:
+    
+    ```{r}
+    table(color.vec)
+    ```
+# 
+    (g)\ Rearrange the order in `color.vec` by letting the first letter from z to a.    
+    
+    > Solution:
+    
+    ```{r}
+    sort(color.vec, decreasing = T)
+    ```
+# 
+
+2. Use `seq()`, `rep()`, and vector calculation in **R** to write codes for the following questions.
+*(Do not use “for loop”.)*    
+    (a)\ Calculate the values of $\sum_{j=1}^{n} j^2$ when $n$ = 200, 400, 600, 800.    
+    
+    > Solution:
+    
+    ```{r}
+    n <- seq(200,800,200) # c(200, 400, 600, 800)
+    a <- sum(seq(1,n[1])**2) # 2686700
+    b <- sum(seq(1,n[2])**2) # 21413400
+    c <- sum(seq(1,n[3])**2) # 72180100
+    d <- sum(seq(1,n[4])**2) # 170986800
+    Q2.a <- c(a, b, c, d)
+    Q2.a
+    ```
+# 
+    (b)\ Calculate the values of $n(n+1)(2n+1)/6$ when $n$ = 200, 400, 600, 800.    
+    
+    > Solution:
+    
+    ```{r}
+    Q2.b <- n*(n+1)*(2*n+1)/6
+    Q2.b
+    ```
+# 
+    (c)\ Check if the values of (a) and (b) are the same. (The output should show either TRUE or FALSE.)    
+    
+    > Solution:
+    
+    ```{r}
+    identical(Q2.a, Q2.b)
+    ```
+# 
+
+3. `score0 <- c(81.2, 89.6, 64.2, 91.3, 77.4, 84.5, NA, 91.7, 63.5, 84.8, NA, 87.8, 87.9, 80.9, 74.8, 64.3, 78.7, 91.3, 76.9, 74.9, 87.6, 88.4)`
+    (a)\ Typing `mean(score0)` and `max(score0)`, what results do you get?    
+    
+    > Solution:
+    
+    ```{r}
+    score0 <- c(81.2, 89.6, 64.2, 91.3, 77.4, 84.5, NA, 91.7, 63.5, 84.8, NA,
+                87.8, 87.9, 80.9, 74.8, 64.3, 78.7, 91.3, 76.9, 74.9, 87.6, 88.4)
+    print(mean(score0))
+    print(max(score0))
+    ```
+# 
+    (b)\ How to modify `mean()` and `max()` so that you can get the numeric answers?    
+    
+    > Solution:
+    
+    ```{r}
+    mean(score0, na.rm = T)
+    max(score0, na.rm = T)
+    ```
+# 
+    (c)\ Delete `NA` from the vector `score0` and assign the name `score1` to the new vector.    
+    What do you get if you type `mean(score1)` and `max(score1)`? Are the answers the same as those in (b)?    
+    
+    > Solution:
+    
+    ```{r}
+    score1 <- score0[!is.na(score0)]
+    mean(score1)
+    max(score1)
+    mean(score0, na.rm = T) == mean(score1)
+    max(score0, na.rm = T) == max(score1)
+    ```
+# 
+    (d)\ If I obtain two scores, 67.2 and 89.5, try to change the values in `score0` from `NA` to 67.2 and 89.5, and assign the name `score2` to the new vector.    
+    
+    > Solution:
+    
+    ```{r}
+    score2 <- score0
+    score2[score2 %in% NA] <- c(67.2, 89.5)
+    score2
+    ```
+# 
+    (e)\ What do you get if you type `mean(score2)` and `max(score2)`?    
+    
+    > Solution:
+    
+    ```{r}
+    mean(score2)
+    max(score2)
+    ```
+    
+***
+
+## Programming HW2
+##### NCKU STAT 111  /  H24076095
+
+1. Rolling two fair dices, evaluate the total number that all possible outcomes occur at least once. The events are as follows, and each row has two outcomes of dices.
+    ```{r eval=FALSE}
+    two.dice <- matrix( c(3, 5, 5, 4, 4, 3, 4, 5, 5, 2, 3, 2, 6, 6, 6,
+    3, 6, 2, 1, 2, 5, 6, 1, 5, 6, 1, 3, 6, 6, 3,
+    5, 3, 3, 5, 3, 3, 4, 2, 1, 4, 3, 1, 5, 1, 6,
+    4, 5, 5, 3, 5, 2, 2, 1, 2, 2, 6, 1, 3, 4, 5,
+    6, 4, 3, 3, 6, 1, 2, 1, 4, 5, 1, 1, 2, 3, 6,
+    5, 6, 5, 3, 1, 4, 1, 5, 2, 2, 6, 3, 2, 3, 1,
+    5, 1, 2, 5, 1, 1, 1, 3, 1, 3, 4, 1, 6, 5, 1,
+    5, 6, 6, 5, 5, 2, 4, 1, 3, 5, 2, 1, 1, 1, 1), ncol = 2)
+    ```
+    > Solution:
+    
+    ```{r}
+    two.dice <- matrix( c(3, 5, 5, 4, 4, 3, 4, 5, 5, 2, 3, 2, 6, 6, 6,
+                          3, 6, 2, 1, 2, 5, 6, 1, 5, 6, 1, 3, 6, 6, 3,
+                          5, 3, 3, 5, 3, 3, 4, 2, 1, 4, 3, 1, 5, 1, 6,
+                          4, 5, 5, 3, 5, 2, 2, 1, 2, 2, 6, 1, 3, 4, 5,
+                          6, 4, 3, 3, 6, 1, 2, 1, 4, 5, 1, 1, 2, 3, 6,
+                          5, 6, 5, 3, 1, 4, 1, 5, 2, 2, 6, 3, 2, 3, 1,
+                          5, 1, 2, 5, 1, 1, 1, 3, 1, 3, 4, 1, 6, 5, 1,
+                          5, 6, 6, 5, 5, 2, 4, 1, 3, 5, 2, 1, 1, 1, 1), ncol = 2)
+    S <- c()
+    i <- 1
+    while (length(unique(S)) < 11) {
+      S <- c(S, sum(two.dice[i, ]))
+      i <- i + 1
+    }
+    print(length(S))
+    ```
+# 
+
+2. Let $U_1, . . . ,U_k$ be from a uniform(0,1). Define
+$$N = max\{n:\prod_{i=1}^{n} U_i > 10^-8\}.$$
+What is the value of N if you use the following sequence?
+    ```{r eval=FALSE}
+    U <- c(0.89, 0.03, 0.52, 0.41, 0.09, 0.37, 0.71, 0.29, 0.01, 0.92,
+           0.53, 0.14, 0.64, 0.94, 0.89, 0.19, 0.33, 0.31, 0.24, 0.15)
+    ```
+    You should use at least one of `for( )`, `while( )`, and `if( )`.    
+    
+    > Solution:
+
+    ```{r}
+    U <- c(0.89, 0.03, 0.52, 0.41, 0.09, 0.37, 0.71, 0.29, 0.01, 0.92,
+           0.53, 0.14, 0.64, 0.94, 0.89, 0.19, 0.33, 0.31, 0.24, 0.15)
+    n <- 0
+    product <- 1
+    while (product > 1e-08) {
+      n <- n + 1
+      product <- product * U[n]
+    }
+    print(n - 1)  # 15
+    ```
+# 
+
+3. Collect students’ scores of math and English as follows:
+    ```{r eval=FALSE}
+    Math <- c(79, 61, 76, 40, 51, 98, 48, 34, 54, 51, 45, 61, 75, 42, 32,
+              61, 56, 82, 22, 33, 19, 60, 91, 49, 44)
+    English <- c(87, 54, 96, 63, 58, 75, 60, 74, 46, 94, 57, 69, 69, 55, 79,
+                 94, 72, 86, 85, 56, 62, 77, 78, 62, 56)
+    ```
+    
+    > Solution:
+    
+    ```{r}
+    Math <- c(79, 61, 76, 40, 51, 98, 48, 34, 54, 51, 45, 61, 75, 42, 32,
+              61, 56, 82, 22, 33, 19, 60, 91, 49, 44)
+    English <- c(87, 54, 96, 63, 58, 75, 60, 74, 46, 94, 57, 69, 69, 55, 79,
+                 94, 72, 86, 85, 56, 62, 77, 78, 62, 56)
+    ```
+    (a)\ Construct a matrix with two columns to collect these scores. The first column is for math and the second column is for English. Assign the names for the columns as “Math” and “English”, respectively, and assign the ID numbers for the rows from 1 to the total number of the students. Assign the name to the matrix as “scores”.    
+    
+    > Solution:
+    
+    ```{r}
+    scores <- matrix(c(Math, English), ncol = 2)
+    colnames(scores) <- c("Math", "English")
+    rownames(scores) <- 1 : nrow(scores)
+    scores
+    ```
+# 
+    (b)\ Classify the students by the scores. Define the student passes the class if the score is greater or equal to 60, and the student gets a fail if the score is less than 60. Summarize the number of each of the following event:    
+    - A: Math  60 and English  60;    
+    - B: Math  60 and English < 60;    
+    - C: Math < 60 and English  60;    
+    - D: Math < 60 and English < 60.    
+    
+    > Solution:
+    
+    ```{r}
+    Class = rep("D", nrow(scores))
+    Class[which(Math >= 60 & English >= 60)] = "A"
+    Class[which(Math >= 60 & English < 60)] = "B"
+    Class[which(Math < 60 & English >= 60)] = "C"
+    for (i in c("A", "B", "C", "D")) {
+      cat("Number of event ", i, ": ", length(which(Class == i)), "\n", sep = "")
+    }
+    ```
+# 
+    (c)\ Provide the students’ ID numbers in each category (A, B, C, D).    
+    
+    > Solution:
+    
+    ```{r}
+    for (i in c("A", "B", "C", "D")) {
+      cat("Students' ID in category", paste(i, ":", sep = ""), which(Class == i), "\n")
+    }
+    ```
+# 
+
+4. When you enter a vector including {5, 10, 11, 1, 0, 3, 8, 10, 4, 0, 1, 6, 7, 10, 7, 0}, treat 0 as a missing value. Delete all missing values and evaluate the following questions:    
+    (1)\ Sum of the values in the vector;    
+    (2)\ The length of the input vector;    
+    (3)\ The average of the values in the vector;    
+    (4)\ The number of odd values in the vector;    
+    (5)\ The number of 10 in the vector;    
+    (6)\ The maximum of the values in the vector.    
+    
+    Using `paste( )` and `cat( )` (or `print( )`), prepare the code for the following output:
+    ```{r echo=FALSE}
+    v <- c(5, 10, 11, 1, 0, 3, 8, 10, 4, 0, 1, 6, 7, 10, 7, 0)
+    v <- v[-which(v == 0)]
+    cat("(1) Sum: ", sum(v), "\n",
+        "(2) Length: ", length(v), "\n",
+        "(3) Average: ", mean(v), "\n",
+        "(4) # of odd: ", length(which(v %% 2 == 1)), "\n",
+        "(5) # of 10: ", length(which(v == 10)), "\n",
+        "(6) Max: ", max(v), "\n", sep = "")
+    ```
+    **Note that: Do not type the exact values, {83, 13, 6.384615, 7, 3, 11}, by yourself, but use the evaluations and paste them (paste(. . . )) to show the output.**    
+    Apply the code to the vector {7, 5, 0, 1, 2, 7, 1, 10, 5, 0, 3, 7, 2, 3, 3} and print the results from (1) to (6).    
+    
+    > Solution:
+    
+    ```{r}
+    #v <- c(5, 10, 11, 1, 0, 3, 8, 10, 4, 0, 1, 6, 7, 10, 7, 0)
+    v <- c(7, 5, 0, 1, 2, 7, 1, 10, 5, 0, 3, 7, 2, 3, 3)
+    v <- v[-which(v == 0)]
+    ```
+
+    - using ```cat()``` function: 
+    ```{r}
+    cat("(1) Sum: ", sum(v), "\n",
+        "(2) Length: ", length(v), "\n",
+        "(3) Average: ", mean(v), "\n",
+        "(4) # of odd: ", length(which(v %% 2 == 1)), "\n",
+        "(5) # of 10: ", length(which(v == 10)), "\n",
+        "(6) Max: ", max(v), "\n", sep = "")
+    ```
+
+    - using ```paste()``` function: 
+    ```{r}
+    writeLines(paste("(1) Sum: ", sum(v), "\n",
+        "(2) Length: ", length(v), "\n",
+        "(3) Average: ", mean(v), "\n",
+        "(4) # of odd: ", length(which(v %% 2 == 1)), "\n",
+        "(5) # of 10: ", length(which(v == 10)), "\n",
+        "(6) Max: ", max(v), "\n", sep = ""))
+    ```
+
+***
+
+## Programming HW3
+##### NCKU STAT 111  /  H24076095
+
+
+1. Write Rmarkdown codes to provide the expression of probability density function (pdf) or probability mass function (pmf) of the following distribution.  
+    (a) **Binomial distribution with parameters $n$ and $p$ with $x = 0, ..., n$.**    
+    Let $X \sim B(n,p)$. Then $X$ has density function:
+    $$f(X=x) = (^n_x)p^x(1-p)^{n-x}, \qquad x=0,1,2,...,n$$  
+    (b) **Gamma distribution with shape parameter $\alpha$ and the rate parameter $\lambda$ with $x>0$.**    
+    Let $X \sim \Gamma(\alpha,\lambda)$. Then $X$ has density function:
+    $$f(X=x)=\frac{x^{(\alpha-1)}\lambda^\alpha e^{(-\lambda x)}}{\Gamma(\alpha)},\qquad x>0$$  
+    (c) **Normal distribution with parameters $\mu$ and $\sigma^2$ with $-\infty<x<\infty$.**    
+    Let $X \sim N(\mu,\sigma^2)$. Then $X$ has density function:
+    $$f(X=x)=\frac1{\sigma \sqrt{2\pi}}e^{-\frac12(\frac{x-\mu}{\sigma})^2}, \qquad -\infty<x<\infty$$        
+
+    
+2. Draw the pdf (or pmf) of each distribution in Question 1. Write codes and use all control
+argument in plot(...) and par(...) to show the following plots.  
+```{r fig.width=10, fig.height=8}
+par(mfrow = c(2,2))
+# 1
+x <- 0:10
+for (i in 1:3) {
+  p_x <- dbinom(x, size=10, prob=c(0.7, 0.5, 0.2)[i]) # size = n(=10), prob = p
+  plot  (x, p_x, type='h', xlab="", ylab="", ylim = c(0, 0.4), col=c(1,4,2)[i], lty=c(1,4,2)[i])
+  points(x, p_x, pch=c(19, 8, 17)[i], col=c(1,4,2)[i])
+  if(i != 3) par(new=TRUE)
+}
+title(expression("Bimomial(n, p) with n = 10"), xlab = "x", ylab = "pmf")
+legend("topright", c("p = 0.7", "p = 0.5", "p = 0.2"), col=c(1,4,2), lty=c(1,4,2), pch=c(19,8,17))
+
+#2
+curve(expr = dgamma(x = x, shape = 1, rate = 3), ylab = "pdf", col = 1, xlim = c(0, 5), ylim = c(0, 3))
+title(expression(paste("Gamma(", alpha , ", ", lambda, ") with ", lambda, " = 3")))
+for (i in 1:3) {
+  curve(expr = dgamma(x = x, shape = c(2, 3, 5)[i], rate = 3), col = c(2, 4, 8)[i], lty=c(2,4,11)[i], add = TRUE)
+}
+legend(x = "topright", legend = c(expression(paste(alpha," = 1")),
+                                  expression(paste(alpha," = 2")),
+                                  expression(paste(alpha," = 3")),
+                                  expression(paste(alpha," = 5"))), 
+       col = c(1,2,4,8), lty = c(1,2,4,11))
+
+#3
+curve(expr = dnorm(x = x, mean = 5), ylab = "pdf", col = 1, xlim = c(0, 20), ylim = c(0, 0.4))
+title(expression(paste("N(", mu , ", ", sigma^2, ") with ", sigma^2, " = 1")))
+for (i in 1:3) {
+  curve(expr = dnorm(x = x, mean = c(10,12,14)[i]), col = c(2, 4, 8)[i], lty=c(2,4,5)[i], add = TRUE)
+}
+legend(x = "topright", legend = c(expression(paste(mu," = 5")),
+                                  expression(paste(mu," = 10")),
+                                  expression(paste(mu," = 12")),
+                                  expression(paste(mu," = 14"))), 
+       col = c(1,2,4,8), lty = c(1,2,4,5))
+
+#4
+curve(expr = dnorm(x = x, sd = 0.5), ylab = "pdf", col = 1, xlim = c(-8, 8), ylim = c(0, 0.8))
+title(expression(paste("N(", mu , ", ", sigma^2, ") with ", mu, " = 0")))
+for (i in 1:3) {
+  curve(expr = dnorm(x = x, sd = c(1,2,3)[i]), col = c(2, 4, 8)[i], lty=c(2,4,5)[i], add = TRUE)
+}
+legend(x = "topright", legend = c(expression(paste(sigma," = 0.5")),
+                                  expression(paste(sigma," = 1")),
+                                  expression(paste(sigma," = 2")),
+                                  expression(paste(sigma," = 3"))), 
+       col = c(1,2,4,8), lty = c(1,2,4,5))
+```
+
